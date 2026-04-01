@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>福岡家庭旅遊 - 九州自駕行程</title>
     <!-- 引入 FontAwesome 圖標 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -10,14 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #121212;
-            --card-bg: #1e1e1e;
+            --bg-color: #f2f2f7;
+            --card-bg: #ffffff;
             --primary: linear-gradient(135deg, #ff6b6b 0%, #ff9f43 100%);
-            --accent: #ff7e5f;
-            --text-main: #ffffff;
-            --text-muted: #b0b0b0;
+            --accent: #ff4500;
+            --text-main: #1c1c1e;
+            --text-muted: #8e8e93;
             --nav-blue: #007aff;
-            --safe-area-inset-bottom: env(safe-area-inset-bottom);
         }
 
         * {
@@ -25,24 +24,29 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            height: -webkit-fill-available;
+        }
+
         body {
             margin: 0;
             padding: 0;
+            padding-top: env(safe-area-inset-top);
             font-family: 'Noto Sans TC', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow-x: hidden;
+            overflow: hidden; /* 防止整體滾動，交給內部 view-section */
             display: flex;
             flex-direction: column;
             height: 100vh;
+            height: -webkit-fill-available;
         }
 
         /* --- Header & Date Nav --- */
         header {
             padding: 20px 16px 10px;
             background: var(--bg-color);
-            position: sticky;
-            top: 0;
+            flex-shrink: 0;
             z-index: 100;
         }
 
@@ -59,6 +63,7 @@
             gap: 12px;
             padding-bottom: 5px;
             scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         .date-slider::-webkit-scrollbar {
@@ -73,7 +78,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: #2a2a2a;
+            background: #e5e5ea;
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
@@ -82,6 +87,7 @@
         .date-item.active {
             background: var(--primary);
             box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+            color: white;
         }
 
         .date-item .day {
@@ -98,26 +104,33 @@
         /* --- Tab Switcher --- */
         .tab-nav {
             display: flex;
-            background: #252525;
+            background: #e5e5ea;
             margin: 10px 16px;
             border-radius: 10px;
             padding: 4px;
+            flex-shrink: 0;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 8px;
+            padding: 10px;
             text-align: center;
             font-size: 14px;
             font-weight: 500;
             border-radius: 8px;
             cursor: pointer;
             transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #8e8e93;
         }
 
         .tab-btn.active {
-            background: #3d3d3d;
-            color: var(--accent);
+            background: #ffffff;
+            color: var(--nav-blue);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         /* --- Content Areas --- */
@@ -125,24 +138,24 @@
             flex: 1;
             position: relative;
             overflow: hidden;
+            min-height: 0;
         }
 
         .view-section {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             transition: transform 0.3s ease-out;
             overflow-y: auto;
-            padding: 0 16px 80px;
+            padding: 0 16px calc(40px + env(safe-area-inset-bottom));
+            -webkit-overflow-scrolling: touch;
         }
 
         #itinerary-view { transform: translateX(0); }
-        #map-view { transform: translateX(100%); padding: 0; }
-
-        .view-section.hidden {
-            display: none;
+        #map-view { 
+            transform: translateX(100%); 
+            padding: 0; 
+            display: flex;
+            flex-direction: column;
         }
 
         /* --- Itinerary Cards --- */
@@ -157,7 +170,7 @@
             padding: 16px;
             margin-bottom: 20px;
             position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         .card-header {
@@ -169,10 +182,10 @@
 
         .time-tag {
             font-size: 12px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(0,122,255,0.1);
             padding: 2px 8px;
             border-radius: 4px;
-            color: var(--accent);
+            color: var(--nav-blue);
             font-weight: 500;
         }
 
@@ -191,8 +204,8 @@
 
         .mapcode {
             font-size: 11px;
-            color: #888;
-            background: #2a2a2a;
+            color: #8e8e93;
+            background: #f2f2f7;
             padding: 4px 8px;
             border-radius: 4px;
             display: inline-block;
@@ -205,35 +218,44 @@
             justify-content: center;
             background: var(--nav-blue);
             color: white;
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             text-decoration: none;
             font-size: 14px;
             font-weight: 600;
             gap: 8px;
             transition: opacity 0.2s;
+            -webkit-appearance: none;
         }
 
         .btn-nav:active { opacity: 0.8; }
 
         /* --- Map View --- */
+        .map-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+        }
+
         #map-frame {
             width: 100%;
             height: 100%;
             border: none;
-            filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%); /* 簡易暗色地圖效果 */
         }
 
         .map-overlay-info {
             position: absolute;
-            bottom: 20px;
+            bottom: calc(20px + env(safe-area-inset-bottom));
             left: 16px;
             right: 16px;
-            background: rgba(30, 30, 30, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 12px 16px;
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            z-index: 10;
+            color: var(--text-main);
         }
 
         /* --- Animations --- */
@@ -270,7 +292,9 @@
 
         <!-- 地圖全螢幕視圖 -->
         <div id="map-view" class="view-section">
-            <iframe id="map-frame" src="" allowfullscreen loading="lazy"></iframe>
+            <div class="map-container">
+                <iframe id="map-frame" src="" allowfullscreen loading="lazy"></iframe>
+            </div>
             <div class="map-overlay-info" id="mapInfo">
                 <div style="font-size: 12px; color: var(--accent); margin-bottom: 4px;">當前路線重點</div>
                 <div id="route-summary" style="font-size: 14px; font-weight: 600;">載入中...</div>
@@ -280,6 +304,38 @@
 
     <script>
         const tripData = {
+            "4/9": {
+                dayLabel: "Day 1",
+                origin: "Fukuoka+Airport",
+                destination: "KOKO+HOTEL+Hakata+Ekimae",
+                via: "",
+                routeInfo: "抵達福岡 & 入住 KOKO HOTEL",
+                locations: [
+                    { time: "11:00", name: "CX588 抵達", desc: "11:00 - 15:30 (爸媽哥)", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "15:00", name: "KOKO HOTEL 博多站前", desc: "確認編號：K26032710177H01", mapcode: "訂單：1359043325664293 (7528)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+Hakata+Ekimae" }
+                ]
+            },
+            "4/10": {
+                dayLabel: "Day 2",
+                origin: "Hakata+Station",
+                destination: "Hiroshima+Peace+Memorial",
+                via: "",
+                routeInfo: "廣島一日遊",
+                locations: [
+                    { time: "09:00", name: "廣島市一日遊", desc: "參觀原爆遺址與廣島市區", mapcode: "廣島市", icon: "fa-monument", link: "https://www.google.com/maps/search/?api=1&query=Hiroshima+Peace+Memorial" }
+                ]
+            },
+            "4/11": {
+                dayLabel: "Day 3",
+                origin: "Fukuoka+Airport",
+                destination: "Shizutetsu+Hotel+Prezio+Hakata+Ekimae",
+                via: "",
+                routeInfo: "成員集合 & 入住靜鐵酒店",
+                locations: [
+                    { time: "10:55", name: "UO668 抵達", desc: "10:55 - 15:20 (忠雯芮)", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "15:00", name: "静鉄ホテルプレジオ博多駅前", desc: "確認編號：22315091479074", mapcode: "訂單：1359043327285618 (1429)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Shizutetsu+Hotel+Prezio+Hakata+Ekimae" }
+                ]
+            },
             "4/12": {
                 dayLabel: "Day 4",
                 origin: "Fukuoka+Airport",
@@ -289,7 +345,7 @@
                 locations: [
                     { time: "09:00", name: "Budget租車 取車", desc: "HCQ8+RJ Fukuoka (福岡機場店)", mapcode: "Mapcode: 13 323 115*52", icon: "fa-car", link: "https://www.google.com/maps/search/?api=1&query=Budget+Rent+A+Car+Fukuoka+Airport" },
                     { time: "11:30", name: "日田市 (豆田町)", desc: "漫步小京都，享用日田炒麵或鰻魚飯", mapcode: "Mapcode: 202 817 565*25", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Mameda+machi+Hita" },
-                    { time: "16:00", name: "別府杉乃井酒店", desc: "入住別府最受歡迎親子飯店，享用棚湯與噴泉秀", mapcode: "46 402 634*17", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Suginoi+Hotel+Beppu" }
+                    { time: "16:00", name: "別府杉乃井酒店", desc: "予約番号: 3456-6643-5659 / 3456-6645-5060", mapcode: "Mapcode: 46 402 634*17", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Suginoi+Hotel+Beppu" }
                 ]
             },
             "4/13": {
@@ -299,7 +355,7 @@
                 via: "African+Safari+Oita",
                 routeInfo: "別府 → 九州自然動物園 → 日出町",
                 locations: [
-                    { time: "10:00", name: "九州自然動物園", desc: "叢林巴士體驗，近距離餵食獅子與猛獸", mapcode: "46 634 658*87", icon: "fa-paw", link: "https://www.google.com/maps/search/?api=1&query=African+Safari+Oita" },
+                    { time: "10:00", name: "九州自然動物園", desc: "叢林巴士體驗，近距離餵食獅子與猛獸", mapcode: "Mapcode: 46 634 658*87", icon: "fa-paw", link: "https://www.google.com/maps/search/?api=1&query=African+Safari+Oita" },
                     { time: "17:00", name: "日出町 Airbnb", desc: "入住寧靜的海濱小鎮民宿", mapcode: "9G6V+98 Hiji, Oita", icon: "fa-house-user", link: "https://www.google.com/maps/search/?api=1&query=Hiji+Oita" }
                 ]
             },
@@ -310,9 +366,9 @@
                 via: "Harmonyland+Oita",
                 routeInfo: "日出町 → Harmonyland → 福岡還車",
                 locations: [
-                    { time: "10:00", name: "Harmonyland (三麗鷗樂園)", desc: "Hello Kitty 戶外主題樂園，看表演與遊樂設施", mapcode: "46 830 567*84", icon: "fa-ticket", link: "https://www.google.com/maps/search/?api=1&query=Harmonyland+Oita" },
-                    { time: "16:00", name: "福岡還車", desc: "返回福岡市區或機場還車點", mapcode: "福岡空港附近", icon: "fa-car-side", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
-                    { time: "18:00", name: "糸島牡蠣小屋 OKUITO", desc: "季節限定體驗，現烤美味鮮蚵", mapcode: "H9PW+GV Fukuoka", icon: "fa-shrimp", link: "https://www.google.com/maps/search/?api=1&query=糸島牡蠣小屋" }
+                    { time: "10:00", name: "Harmonyland (三麗鷗樂園)", desc: "Hello Kitty 戶外主題樂園，看表演與遊樂設施", mapcode: "Mapcode: 46 830 567*84", icon: "fa-ticket", link: "https://www.google.com/maps/search/?api=1&query=Harmonyland+Oita" },
+                    { time: "16:00", name: "福岡還車", desc: "返回福岡市區或機場還車點 (福岡空港附近)", mapcode: "福岡空港附近", icon: "fa-car-side", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "18:00", name: "かわ屋 博多駅筑紫口店", desc: "雞串 https://www.kawaya.co/%E8%A9%B3%E7%B4%B0_", mapcode: "Mapcode: HCQF+HG Fukuoka, Japan", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=かわ屋+博多駅筑紫口店" }
                 ]
             },
             "4/15": {
@@ -323,7 +379,7 @@
                 routeInfo: "福岡市區一日遊：麵包超人與海鮮",
                 locations: [
                     { time: "11:00", name: "福岡麵包超人館", desc: "適合小朋友的室內樂園，位於博多河畔城", mapcode: "博多リバレインモール 5・6F", icon: "fa-face-smile-beam", link: "https://www.google.com/maps/search/?api=1&query=Anpanman+Museum+Fukuoka" },
-                    { time: "18:00", name: "灣岸丸 (海鮮料理)", desc: "享用新鮮活魚與刺身料理", mapcode: "13 378 005*73", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Wanganmaru+Fukuoka" }
+                    { time: "18:00", name: "灣岸丸 (海鮮料理)", desc: "享用新鮮活魚與刺身料理", mapcode: "Mapcode: 13 378 005*73", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Wanganmaru+Fukuoka" }
                 ]
             },
             "4/16": {
@@ -338,7 +394,7 @@
             }
         };
 
-        let currentDay = "4/12";
+        let currentDay = "4/9";
         let currentView = "itinerary";
 
         function init() {
