@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>福岡家庭旅遊 - 九州自駕行程</title>
+    <!-- 引入 FontAwesome 圖標 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --primary: linear-gradient(135deg, #ff6b6b 0%, #ff9f43 100%);
+            --accent: #ff7e5f;
+            --text-main: #ffffff;
+            --text-muted: #b0b0b0;
+            --nav-blue: #007aff;
+            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* --- Header & Date Nav --- */
+        header {
+            padding: 20px 16px 10px;
+            background: var(--bg-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 22px;
+            margin: 0 0 15px 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .date-slider {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+
+        .date-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .date-item {
+            flex: 0 0 60px;
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #2a2a2a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .date-item.active {
+            background: var(--primary);
+            box-shadow: 0 4px 10px rgba(255, 107, 107, 0.4);
+        }
+
+        .date-item .day {
+            font-size: 10px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        .date-item .date {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* --- Tab Switcher --- */
+        .tab-nav {
+            display: flex;
+            background: #252525;
+            margin: 10px 16px;
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background: #3d3d3d;
+            color: var(--accent);
+        }
+
+        /* --- Content Areas --- */
+        .main-content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-section {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease-out;
+            overflow-y: auto;
+            padding: 0 16px 80px;
+        }
+
+        #itinerary-view { transform: translateX(0); }
+        #map-view { transform: translateX(100%); padding: 0; }
+
+        .view-section.hidden {
+            display: none;
+        }
+
+        /* --- Itinerary Cards --- */
+        .timeline-container {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .location-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .time-tag {
+            font-size: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .location-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 5px 0;
+        }
+
+        .description {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .mapcode {
+            font-size: 11px;
+            color: #888;
+            background: #2a2a2a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .btn-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--nav-blue);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-nav:active { opacity: 0.8; }
+
+        /* --- Map View --- */
+        #map-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%); /* 簡易暗色地圖效果 */
+        }
+
+        .map-overlay-info {
+            position: absolute;
+            bottom: 20px;
+            left: 16px;
+            right: 16px;
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in { animation: fadeIn 0.4s ease forwards; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>福岡家庭旅遊</h1>
+        <div class="date-slider" id="dateSlider">
+            <!-- 由 JS 動態生成 -->
+        </div>
+    </header>
+
+    <div class="tab-nav">
+        <div class="tab-btn active" onclick="switchView('itinerary')"><i class="fa-solid fa-list-ul"></i> 行程</div>
+        <div class="tab-btn" onclick="switchView('map')"><i class="fa-solid fa-map-location-dot"></i> 地圖</div>
+    </div>
+
+    <main class="main-content">
+        <!-- 行程列表視圖 -->
+        <div id="itinerary-view" class="view-section">
+            <div id="cards-container">
+                <!-- 由 JS 動態生成 -->
+            </div>
+        </div>
+
+        <!-- 地圖全螢幕視圖 -->
+        <div id="map-view" class="view-section">
+            <iframe id="map-frame" src="" allowfullscreen loading="lazy"></iframe>
+            <div class="map-overlay-info" id="mapInfo">
+                <div style="font-size: 12px; color: var(--accent); margin-bottom: 4px;">當前路線重點</div>
+                <div id="route-summary" style="font-size: 14px; font-weight: 600;">載入中...</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const tripData = {
+            "4/12": {
+                dayLabel: "Day 4",
+                origin: "Fukuoka+Airport",
+                destination: "Suginoi+Hotel+Beppu",
+                via: "Hita+City",
+                routeInfo: "福岡市 → 日田市 → 別府杉乃井",
+                locations: [
+                    { time: "09:00", name: "Budget租車 取車", desc: "HCQ8+RJ Fukuoka (福岡機場店)", mapcode: "Mapcode: 13 323 115*52", icon: "fa-car", link: "https://www.google.com/maps/search/?api=1&query=Budget+Rent+A+Car+Fukuoka+Airport" },
+                    { time: "11:30", name: "日田市 (豆田町)", desc: "漫步小京都，享用日田炒麵或鰻魚飯", mapcode: "Mapcode: 202 817 565*25", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Mameda+machi+Hita" },
+                    { time: "16:00", name: "別府杉乃井酒店", desc: "入住別府最受歡迎親子飯店，享用棚湯與噴泉秀", mapcode: "46 402 634*17", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Suginoi+Hotel+Beppu" }
+                ]
+            },
+            "4/13": {
+                dayLabel: "Day 5",
+                origin: "Suginoi+Hotel+Beppu",
+                destination: "Hiji+Oita",
+                via: "African+Safari+Oita",
+                routeInfo: "別府 → 九州自然動物園 → 日出町",
+                locations: [
+                    { time: "10:00", name: "九州自然動物園", desc: "叢林巴士體驗，近距離餵食獅子與猛獸", mapcode: "46 634 658*87", icon: "fa-paw", link: "https://www.google.com/maps/search/?api=1&query=African+Safari+Oita" },
+                    { time: "17:00", name: "日出町 Airbnb", desc: "入住寧靜的海濱小鎮民宿", mapcode: "9G6V+98 Hiji, Oita", icon: "fa-house-user", link: "https://www.google.com/maps/search/?api=1&query=Hiji+Oita" }
+                ]
+            },
+            "4/14": {
+                dayLabel: "Day 6",
+                origin: "Hiji+Oita",
+                destination: "Fukuoka+City",
+                via: "Harmonyland+Oita",
+                routeInfo: "日出町 → Harmonyland → 福岡還車",
+                locations: [
+                    { time: "10:00", name: "Harmonyland (三麗鷗樂園)", desc: "Hello Kitty 戶外主題樂園，看表演與遊樂設施", mapcode: "46 830 567*84", icon: "fa-ticket", link: "https://www.google.com/maps/search/?api=1&query=Harmonyland+Oita" },
+                    { time: "16:00", name: "福岡還車", desc: "返回福岡市區或機場還車點", mapcode: "福岡空港附近", icon: "fa-car-side", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "18:00", name: "糸島牡蠣小屋 OKUITO", desc: "季節限定體驗，現烤美味鮮蚵", mapcode: "H9PW+GV Fukuoka", icon: "fa-shrimp", link: "https://www.google.com/maps/search/?api=1&query=糸島牡蠣小屋" }
+                ]
+            },
+            "4/15": {
+                dayLabel: "Day 7",
+                origin: "Fukuoka+Anpanman+Museum",
+                destination: "Wanganmaru+Fukuoka",
+                via: "",
+                routeInfo: "福岡市區一日遊：麵包超人與海鮮",
+                locations: [
+                    { time: "11:00", name: "福岡麵包超人館", desc: "適合小朋友的室內樂園，位於博多河畔城", mapcode: "博多リバレインモール 5・6F", icon: "fa-face-smile-beam", link: "https://www.google.com/maps/search/?api=1&query=Anpanman+Museum+Fukuoka" },
+                    { time: "18:00", name: "灣岸丸 (海鮮料理)", desc: "享用新鮮活魚與刺身料理", mapcode: "13 378 005*73", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Wanganmaru+Fukuoka" }
+                ]
+            },
+            "4/16": {
+                dayLabel: "Day 8",
+                origin: "Fukuoka+City",
+                destination: "Fukuoka+Airport",
+                via: "",
+                routeInfo: "歸途：福岡機場返家",
+                locations: [
+                    { time: "08:30", name: "福岡機場 (FUK)", desc: "CX513 / UO669 航班準備搭機返家", mapcode: "機場國際線航廈", icon: "fa-plane", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+International+Airport" }
+                ]
+            }
+        };
+
+        let currentDay = "4/12";
+        let currentView = "itinerary";
+
+        function init() {
+            renderDateSlider();
+            renderContent();
+        }
+
+        function renderDateSlider() {
+            const slider = document.getElementById('dateSlider');
+            Object.keys(tripData).forEach(date => {
+                const item = document.createElement('div');
+                item.className = `date-item ${date === currentDay ? 'active' : ''}`;
+                item.onclick = () => selectDay(date);
+                item.innerHTML = `
+                    <span class="day">${tripData[date].dayLabel}</span>
+                    <span class="date">${date}</span>
+                `;
+                slider.appendChild(item);
+            });
+        }
+
+        function selectDay(date) {
+            currentDay = date;
+            // 更新 UI 樣式
+            document.querySelectorAll('.date-item').forEach(el => {
+                el.classList.remove('active');
+                if(el.querySelector('.date').innerText === date) el.classList.add('active');
+            });
+            renderContent();
+        }
+
+        function renderContent() {
+            const container = document.getElementById('cards-container');
+            const data = tripData[currentDay];
+            container.innerHTML = '';
+            
+            data.locations.forEach((loc, index) => {
+                const card = document.createElement('div');
+                card.className = 'location-card fade-in';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="card-header">
+                        <span class="time-tag">${loc.time}</span>
+                        <i class="fa-solid ${loc.icon}" style="color: #666"></i>
+                    </div>
+                    <div class="location-name">${loc.name}</div>
+                    <div class="description">${loc.desc}</div>
+                    <div class="mapcode">${loc.mapcode}</div>
+                    <a href="${loc.link}" target="_blank" class="btn-nav">
+                        <i class="fa-solid fa-location-arrow"></i> Google Maps 導航
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+
+            // 更新地圖 - 使用 Directions 格式來繪製路線
+            const mapFrame = document.getElementById('map-frame');
+            let routeUrl = `https://maps.google.com/maps?saddr=${data.origin}&daddr=${data.destination}`;
+            if (data.via) {
+                // 使用 +to: 語法增加中途點
+                routeUrl = `https://maps.google.com/maps?saddr=${data.origin}&daddr=${data.via}+to:${data.destination}`;
+            }
+            mapFrame.src = `${routeUrl}&t=&z=10&ie=UTF8&iwloc=&output=embed`;
+            
+            document.getElementById('route-summary').innerText = data.routeInfo;
+        }
+
+        function switchView(view) {
+            currentView = view;
+            const itinerary = document.getElementById('itinerary-view');
+            const map = document.getElementById('map-view');
+            const btns = document.querySelectorAll('.tab-btn');
+
+            btns.forEach(b => b.classList.remove('active'));
+            if (view === 'itinerary') {
+                itinerary.style.transform = 'translateX(0)';
+                map.style.transform = 'translateX(100%)';
+                btns[0].classList.add('active');
+            } else {
+                itinerary.style.transform = 'translateX(-100%)';
+                map.style.transform = 'translateX(0)';
+                btns[1].classList.add('active');
+            }
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
