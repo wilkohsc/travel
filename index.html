@@ -271,15 +271,15 @@
 <body>
 
     <header>
-        <h1>福岡家庭旅遊</h1>
+        <h1>福岡家族大冒險 ✈️🇯🇵</h1>
         <div class="date-slider" id="dateSlider">
             <!-- 由 JS 動態生成 -->
         </div>
     </header>
 
     <div class="tab-nav">
-        <div class="tab-btn active" onclick="switchView('itinerary')"><i class="fa-solid fa-list-ul"></i> 行程</div>
-        <div class="tab-btn" onclick="switchView('map')"><i class="fa-solid fa-map-location-dot"></i> 地圖</div>
+        <div class="tab-btn active" onclick="switchView('itinerary')"><i class="fa-solid fa-list-ul"></i> 精彩行程</div>
+        <div class="tab-btn" onclick="switchView('map')"><i class="fa-solid fa-map-location-dot"></i> 冒險地圖</div>
     </div>
 
     <main class="main-content">
@@ -305,92 +305,92 @@
     <script>
         const tripData = {
             "4/9": {
-                dayLabel: "Day 1",
+                dayLabel: "Day 1 🛫",
                 origin: "Fukuoka+Airport",
                 destination: "KOKO+HOTEL+Hakata+Ekimae",
                 via: "",
-                routeInfo: "抵達福岡 & 入住 KOKO HOTEL",
+                routeInfo: "抵達福岡！期待已久的冒險開始囉 🤩✨ 入住 KOKO HOTEL",
                 locations: [
-                    { time: "11:00", name: "CX588 抵達", desc: "11:00 - 15:30 (爸媽哥)", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
-                    { time: "15:00", name: "KOKO HOTEL 博多站前", desc: "確認編號：K26032710177H01", mapcode: "訂單：1359043325664293 (7528)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+Hakata+Ekimae" }
+                    { time: "11:00", name: "CX588 抵達福岡", desc: "11:00 - 15:30 (爸媽哥) ✈️ 順利通關，日本我們來了！", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "15:00", name: "KOKO HOTEL 博多站前", desc: "🏠 確認編號：K26032710177H01<br>放完行李準備去附近大快朵頤囉！", mapcode: "訂單：1359043325664293 (7528)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=KOKO+HOTEL+Hakata+Ekimae" }
                 ]
             },
             "4/10": {
-                dayLabel: "Day 2",
+                dayLabel: "Day 2 🏙️",
                 origin: "Hakata+Station",
                 destination: "Hiroshima+Peace+Memorial",
                 via: "",
-                routeInfo: "廣島一日遊",
+                routeInfo: "廣島大進擊！歷史與美景的感性之旅 🍱🏙️",
                 locations: [
-                    { time: "09:00", name: "廣島市一日遊", desc: "參觀原爆遺址與廣島市區", mapcode: "廣島市", icon: "fa-monument", link: "https://www.google.com/maps/search/?api=1&query=Hiroshima+Peace+Memorial" }
+                    { time: "09:00", name: "廣島市一日遊", desc: "⛩️ 參觀原爆遺址與廣島市區，感受歷史與重生。別忘了吃廣島燒喔！", mapcode: "廣島市", icon: "fa-monument", link: "https://www.google.com/maps/search/?api=1&query=Hiroshima+Peace+Memorial" }
                 ]
             },
             "4/11": {
-                dayLabel: "Day 3",
+                dayLabel: "Day 3 👨‍👩‍👧‍👦",
                 origin: "Fukuoka+Airport",
                 destination: "Shizutetsu+Hotel+Prezio+Hakata+Ekimae",
                 via: "",
-                routeInfo: "成員集合 & 入住靜鐵酒店",
+                routeInfo: "大家集合啦！全員到齊，歡樂加倍 👨‍👩‍👧‍👦💖 入住靜鐵酒店",
                 locations: [
-                    { time: "10:55", name: "UO668 抵達", desc: "10:55 - 15:20 (忠雯芮)", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
-                    { time: "15:00", name: "静鉄ホテルプレジオ博多駅前", desc: "確認編號：22315091479074", mapcode: "訂單：1359043327285618 (1429)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Shizutetsu+Hotel+Prezio+Hakata+Ekimae" }
+                    { time: "10:55", name: "UO668 抵達福岡", desc: "10:55 - 15:20 (忠雯芮) 🛬 二梯次隊友集體空降！", mapcode: "FUK 機場", icon: "fa-plane-arrival", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "15:00", name: "静鉄ホテルプレジオ博多駅前", desc: "🏨 確認編號：22315091479074<br>全家人開開心心會合，晚上博多大餐慶祝！", mapcode: "訂單：1359043327285618 (1429)", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Shizutetsu+Hotel+Prezio+Hakata+Ekimae" }
                 ]
             },
             "4/12": {
-                dayLabel: "Day 4",
+                dayLabel: "Day 4 🚗",
                 origin: "Fukuoka+Airport",
                 destination: "Suginoi+Hotel+Beppu",
                 via: "Asakura+Triple+Water+Wheels+to:Hita+City",
-                routeInfo: "福岡市 → 朝倉三連水車 → 日田市 → 別府杉乃井",
+                routeInfo: "自駕遊開始！從古老水車到小京都，最後享受頂級溫泉 🚗♨️💦",
                 locations: [
-                    { time: "08:00", name: "Budget租車 取車 (福岡機場店)", desc: "說明: HCQ8+RJ Fukuoka", mapcode: "Mapcode: 13 323 115*52", icon: "fa-car", link: "https://www.google.com/maps/search/?api=1&query=Budget+Rent+A+Car+Fukuoka+Airport" },
-                    { time: "10:00", name: "三連水車の里あさくら", desc: "說明: 9PCX+67 Asakura, Fukuoka, Japan", mapcode: "9PCX+67 Asakura", icon: "fa-water", link: "https://www.google.com/maps/search/?api=1&query=三連水車の里あさくら" },
-                    { time: "11:30", name: "日田市 (豆田町)", desc: "說明: 漫步小京都，享用日田炒麵或鰻魚飯", mapcode: "Mapcode: 202 817 565*25", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Mameda+machi+Hita" },
-                    { time: "16:00", name: "別府杉乃井酒店", desc: "【予約番号】3456-6643-5659 / 3456-6645-5060<br>說明: 入住別府最受歡迎親子飯店，享用棚湯與噴泉秀<br>和料理彩 一泊二食 懷石料理晚餐及早餐", mapcode: "Mapcode: 46 402 634*17", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Suginoi+Hotel+Beppu" }
+                    { time: "08:00", name: "Budget租車 取車", desc: "🚙 拿好車鑰匙，展開我們的公路之旅！福岡機場店取車。", mapcode: "Mapcode: 13 323 115*52", icon: "fa-car", link: "https://www.google.com/maps/search/?api=1&query=Budget+Rent+A+Car+Fukuoka+Airport" },
+                    { time: "10:00", name: "三連水車の里あさくら", desc: "💧 見識兩百多年歷史的古老智慧，感受清涼水聲。", mapcode: "9PCX+67 Asakura", icon: "fa-water", link: "https://www.google.com/maps/search/?api=1&query=三連水車の里あさくら" },
+                    { time: "11:30", name: "日田市 (豆田町)", desc: "🏮 漫步小京都，享用正宗日田炒麵或噴香鰻魚飯 🍱", mapcode: "Mapcode: 202 817 565*25", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Mameda+machi+Hita" },
+                    { time: "16:00", name: "別府杉乃井酒店", desc: "♨️ 入住溫泉樂園！【予約番号】3456-6643-5659<br>盡情享受棚湯與夢幻噴泉秀，吃懷石大餐 🍣🍱", mapcode: "Mapcode: 46 402 634*17", icon: "fa-hotel", link: "https://www.google.com/maps/search/?api=1&query=Suginoi+Hotel+Beppu" }
                 ]
             },
             "4/13": {
-                dayLabel: "Day 5",
+                dayLabel: "Day 5 🦁",
                 origin: "Suginoi+Hotel+Beppu",
                 destination: "Hiji+Oita",
                 via: "African+Safari+Oita",
-                routeInfo: "別府 → 九州自然動物園 → 日出町",
+                routeInfo: "瘋狂動物城！跟獅子老虎近距離接觸 🦁🦓 晚上入住海邊小屋",
                 locations: [
-                    { time: "10:00", name: "九州自然動物園", desc: "叢林巴士體驗，近距離餵食獅子與猛獸", mapcode: "Mapcode: 46 634 658*87", icon: "fa-paw", link: "https://www.google.com/maps/search/?api=1&query=African+Safari+Oita" },
-                    { time: "17:00", name: "日出町 Airbnb", desc: "入住寧靜的海濱小鎮民宿", mapcode: "9G6V+98 Hiji, Oita", icon: "fa-house-user", link: "https://www.google.com/maps/search/?api=1&query=Hiji+Oita" }
+                    { time: "10:00", name: "九州自然動物園", desc: "🚌 登上叢林巴士，體驗餵食猛獸的震撼感覺！🦁🐅 超刺激！", mapcode: "Mapcode: 46 634 658*87", icon: "fa-paw", link: "https://www.google.com/maps/search/?api=1&query=African+Safari+Oita" },
+                    { time: "17:00", name: "日出町 Airbnb", desc: "🌊 入住寧靜的海濱民宿，聽著浪聲進入夢鄉 💤", mapcode: "9G6V+98 Hiji, Oita", icon: "fa-house-user", link: "https://www.google.com/maps/search/?api=1&query=Hiji+Oita" }
                 ]
             },
             "4/14": {
-                dayLabel: "Day 6",
+                dayLabel: "Day 6 🎀",
                 origin: "Hiji+Oita",
                 destination: "Fukuoka+City",
                 via: "Harmonyland+Oita",
-                routeInfo: "日出町 → Harmonyland → 福岡還車",
+                routeInfo: "凱蒂貓夢幻派對！三麗鷗樂園玩到瘋 🎀✨ 晚上回博多大口吃肉",
                 locations: [
-                    { time: "10:00", name: "Harmonyland (三麗鷗樂園)", desc: "Hello Kitty 戶外主題樂園，看表演與遊樂設施", mapcode: "Mapcode: 46 830 567*84", icon: "fa-ticket", link: "https://www.google.com/maps/search/?api=1&query=Harmonyland+Oita" },
-                    { time: "16:00", name: "福岡還車", desc: "返回福岡市區或機場還車點 (福岡空港附近)", mapcode: "福岡空港附近", icon: "fa-car-side", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
-                    { time: "18:00", name: "かわ屋 博多駅筑紫口店", desc: "雞串 https://www.kawaya.co/%E8%A9%B3%E7%B4%B0_", mapcode: "Mapcode: HCQF+HG Fukuoka, Japan", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=かわ屋+博多駅筑紫口店" }
+                    { time: "10:00", name: "Harmonyland (三麗鷗樂園)", desc: "🏰 Hello Kitty 就在你身邊！超美表演與歡樂設施，少女心大爆發 ✨", mapcode: "Mapcode: 46 830 567*84", icon: "fa-ticket", link: "https://www.google.com/maps/search/?api=1&query=Harmonyland+Oita" },
+                    { time: "16:00", name: "福岡還車", desc: "🚙 完成自駕任務！安全返回福岡市區還車。", mapcode: "福岡空港附近", icon: "fa-car-side", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" },
+                    { time: "18:00", name: "かわ屋 博多駅筑紫口店", desc: "🍢 絕讚雞皮串！這家排隊名店絕對值得一試 😋🍺", mapcode: "Mapcode: HCQF+HG Fukuoka, Japan", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=かわ屋+博多駅筑紫口店" }
                 ]
             },
             "4/15": {
-                dayLabel: "Day 7",
+                dayLabel: "Day 7 😊",
                 origin: "Fukuoka+Anpanman+Museum",
                 destination: "Wanganmaru+Fukuoka",
                 via: "",
-                routeInfo: "福岡市區一日遊：麵包超人與海鮮",
+                routeInfo: "最後衝刺！找麵包超人玩耍再大嗑新鮮海產 🌊🍣😋",
                 locations: [
-                    { time: "11:00", name: "福岡麵包超人館", desc: "適合小朋友的室內樂園，位於博多河畔城", mapcode: "博多リバレインモール 5・6F", icon: "fa-face-smile-beam", link: "https://www.google.com/maps/search/?api=1&query=Anpanman+Museum+Fukuoka" },
-                    { time: "18:00", name: "灣岸丸 (海鮮料理)", desc: "享用新鮮活魚與刺身料理", mapcode: "Mapcode: 13 378 005*73", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Wanganmaru+Fukuoka" }
+                    { time: "11:00", name: "福岡麵包超人館", desc: "🥯 適合小朋友的室內天堂，跟著麵包超人一起冒險吧！", mapcode: "博多リバレインモール 5・6F", icon: "fa-face-smile-beam", link: "https://www.google.com/maps/search/?api=1&query=Anpanman+Museum+Fukuoka" },
+                    { time: "18:00", name: "灣岸丸 (海鮮料理)", desc: "🦐 享用最道地的活魚刺身，最後一晚就是要豪邁吃海味！", mapcode: "Mapcode: 13 378 005*73", icon: "fa-utensils", link: "https://www.google.com/maps/search/?api=1&query=Wanganmaru+Fukuoka" }
                 ]
             },
             "4/16": {
-                dayLabel: "Day 8",
+                dayLabel: "Day 8 👋",
                 origin: "Fukuoka+City",
                 destination: "Fukuoka+Airport",
                 via: "",
-                routeInfo: "歸途：福岡機場返家",
+                routeInfo: "收穫滿滿回家囉！期待下一次的冒險 🏠✈️👋",
                 locations: [
-                    { time: "08:30", name: "福岡機場 (FUK)", desc: "CX513 / UO669 航班準備搭機返家", mapcode: "機場國際線航廈", icon: "fa-plane", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+International+Airport" }
+                    { time: "08:30", name: "福岡機場 (FUK)", desc: "🛫 準備搭機返家。福岡，我們下次再見囉！行李滿滿心也暖暖的 💖", mapcode: "機場國際線航廈", icon: "fa-plane", link: "https://www.google.com/maps/search/?api=1&query=Fukuoka+International+Airport" }
                 ]
             }
         };
