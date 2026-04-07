@@ -1,6 +1,7 @@
 export default {
-  async fetch(request, env) {
-    const MY_PIN = "env.SECRET_PIN"; // ⬅️ SET YOUR PIN HERE! 🔢
+  async onRequest(context) { // Pages uses onRequest, not fetch
+    const { request, env } = context; // Pull request and env out of context
+    const MY_PIN = env.SECRET_PIN;
     const cookieName = "gatekeeper_auth";
 
     // 1. Check if the user already has the valid cookie
